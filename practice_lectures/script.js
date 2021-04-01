@@ -136,7 +136,7 @@ const long = new Rectangle(20, 100);
 console.log(square.calcArea());
 console.log(long.calcArea()); */
 
-const objWithArr = {
+/* const objWithArr = {
     name: 'Alex',
     tel: '+744444444',
     parents: []
@@ -154,10 +154,10 @@ const persone = {
         mom: 'Olga',
         dad: 'Dima'
     }
-};
+}; */
 //console.log(JSON.stringify(persone));
 //console.log(JSON.parse(JSON.stringify(persone)));
-const me = {...persone}; // shallow copy, does not copy objects that refers to the main object
+/* const me = {...persone}; // shallow copy, does not copy objects that refers to the main object
 const clone = JSON.parse(JSON.stringify(persone)); // deep copy
 persone.name = 'Tania';
 
@@ -172,17 +172,70 @@ const howToCopy = function(myObj) {
         console.log('Do shallow copy'); 
     }
 };
-
+ */
 
 // Difference in shallow and deep copying
-console.log(persone);
+/* console.log(persone);
 console.log(clone);
 console.log(me);
 
 howToCopy(persone);
 howToCopy(objWithArr);
-howToCopy(simple);
+howToCopy(simple); */
 
 
 //console.log(clone);
 //console.log(persone);
+
+// Lecture 55 Promises
+/* console.log('Запрос данных...');
+const req = new Promise(function(resolve, reject){
+    setTimeout(()=>{
+        console.log('Подготовка данных...');
+    
+        const product = {
+            name: 'TV',
+            price: 2000
+        };
+        resolve(product);
+        
+    }, 2000); 
+});
+
+
+req.then((product)=>{
+    return new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            product.status = 'order';
+            reject();
+        }, 2000);
+    });
+
+
+}).then(data =>{
+    data.modify = true;
+    return data;
+    
+}).then(data =>{
+    console.log(data);
+}).catch(() => {
+    console.error('Произошла ошибка');
+}).finally(() =>{
+    console.log('finally');
+}); */
+
+const test = time =>{
+    return new Promise(resolve => {
+        setTimeout(() => resolve(), time);
+    });
+};
+//test(1000).then(()=> console.log('1000 ms'));
+//test(2000).then(()=> console.log('2000 ms'));
+
+Promise.all([test(1000), test(2000)]).then(() => {
+    console.log('Everythihg is done');
+});
+
+Promise.race([test(1000), test(2000)]).then(() => {
+    console.log('First promice');
+});
