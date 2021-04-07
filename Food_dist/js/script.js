@@ -341,4 +341,62 @@ window.addEventListener('DOMContentLoaded', () => {
     fetch('http://localhost:3000/menu')
         .then(data => data.json())
         .then(res => console.log(res));
+    
+    const slider = document.querySelector('.offer__slider'), 
+            counter = slider.querySelector('.offer__slider-counter'),
+            prev = counter.querySelector('.offer__slider-prev'),
+            next = counter.querySelector('.offer__slider-next'),
+            current = counter.querySelector('#current'),
+            total = counter.querySelector('#total'),
+            slides = document.querySelectorAll('.offer__slide');
+
+    let slideIndex = 1;
+
+    // Shows current slide, first slide by default
+    function showSlide(){
+        slides.forEach(slide => {
+            slide.style.display = 'none';
+        }); 
+        slides[slideIndex - 1].style.display = 'block';
+    }
+
+    // Shows total number of slides, adds zero if less then 10 
+    function totalSlideNum(){
+        if (slides.length < 10) {
+            total.textContent = `0${slides.length}`;
+        } else {
+            total.textContent = slides.length;
+        }
+    }
+
+    // Shows current slide's number, adds zero if less then 10
+    function currentSlideNum(){
+        if (slideIndex < 10){
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    }
+
+    showSlide();
+    totalSlideNum();
+    currentSlideNum();
+
+    // Switches to the previous or the next slide, depending on an argument.
+    // limits the slide index from 1 to 4
+    function switchSlide(n){
+        slideIndex += n;
+        if (slideIndex > slides.length){
+            slideIndex = 1;
+        }
+        if (slideIndex < 1 ){
+            slideIndex = slides.length;
+        }
+        showSlide();
+        currentSlideNum();
+        
+    }
+    prev.addEventListener('click', ()=> switchSlide(-1));  
+    next.addEventListener('click', () => switchSlide(1));
+
 });
