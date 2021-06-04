@@ -224,13 +224,14 @@ req.then((product)=>{
     console.log('finally');
 }); */
 
+/*
 const test = time =>{
     return new Promise(resolve => {
         setTimeout(() => resolve(), time);
     });
 };
-//test(1000).then(()=> console.log('1000 ms'));
-//test(2000).then(()=> console.log('2000 ms'));
+test(1000).then(()=> console.log('1000 ms'));
+test(2000).then(()=> console.log('2000 ms'));
 
 Promise.all([test(1000), test(2000)]).then(() => {
     console.log('Everythihg is done');
@@ -239,3 +240,88 @@ Promise.all([test(1000), test(2000)]).then(() => {
 Promise.race([test(1000), test(2000)]).then(() => {
     console.log('First promice');
 });
+
+//Lecture 69 Incapsulation
+
+// this is a Function
+
+/* function User(name, age) {
+    this.name = name;
+    let userAge = age;
+
+    this.getAge = () => {
+        return userAge;
+    };
+    this.setAge = (age) => {
+        if(age > 0 && age < 100){
+            userAge = age;
+        } else {
+            console.log('Inappropriate value');
+        }
+        
+    };
+    this.say = () => {
+        console.log(`User's name: ${this.name}, age: ${userAge}`);
+    };
+}
+
+let tania = new User('Tania', 30);
+
+console.log(tania.name);
+tania.say();
+tania.name ='Anna';
+tania.say();
+console.log(tania.userAge);
+tania.setAge(101);
+tania.say(); */
+
+
+//this is a Class
+
+class User {
+    constructor (name, age) {
+        this.name = name;
+        this._age = age;
+    }
+
+    #hobby = 'Guitar';
+    
+    get hobby() {
+        return this.#hobby;
+    }
+    set hobby(hobby) {
+        if (typeof (hobby) === 'string' && hobby.length < 10){
+            this.#hobby = hobby;
+        } else {
+            console.log('Inappropriate value');
+        }
+    }
+
+    say() {
+        console.log(`User's name: ${this.name}, age: ${this._age}, likes ${this.#hobby}`);
+    }
+
+    get age() {
+        return this._age;
+    }
+
+    set age(age) {
+        if (age > 0 && age < 100){
+            this._age = age;
+        } else {
+            console.log('Inappropriate value');
+        }
+    }
+}
+
+let person = new User('Tania', 30);
+person.say();
+
+person.age = 133;
+person.say();
+person.hobby = 13;
+person.hobby = 'ereireyrrerr';
+person.hobby = 'hiking';
+person.say();
+
+
